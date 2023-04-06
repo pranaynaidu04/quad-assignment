@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Cryptocurrency Data</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header>
+		<h1>Hodlinfo.com </h1>
+  <p>provided by Finstreet</p>
+    <div class="button-container">
+  <button id="inr-button">INR</button>
+  <button id="btc-button">BTC</button>
+</div>
+    <div class="telegram-container">
+  <button id="telegram-button">Connect with Telegram</button>
+</div>
+<div class="timer-container">
+  <p id="timer"></p>
+</div>
+
+
+	</header>
+	<main>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Last</th>
+					<th>Buy Price</th>
+					<th>Sell Price</th>
+					<th>Volume</th>
+					<th>Base Unit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Here, we will dynamically generate the table rows using JavaScript -->
+			</tbody>
+		</table>
+	</main>
+	<script src="script.js">
+        const cryptoTableBody = document.getElementById('crypto-table-body');
+
+fetch('/cryptos')
+  .then(response => response.json())
+  .then(cryptos => {
+    cryptos.forEach(crypto => {
+      const row = document.createElement('tr');
+
+      const nameCell = document.createElement('td');
+      nameCell.textContent = crypto.name;
+      row.appendChild(nameCell);
+
+      const lastCell = document.createElement('td');
+      lastCell.textContent = crypto.last;
+      row.appendChild(lastCell);
+
+      const buyPriceCell = document.createElement('td');
+      buyPriceCell.textContent = crypto.buyPrice;
+      row.appendChild(buyPriceCell);
+
+      const sellPriceCell = document.createElement('td');
+      sellPriceCell.textContent = crypto.sellPrice;
+      row.appendChild(sellPriceCell);
+
+      const volumeCell = document.createElement('td');
+      volumeCell.textContent = crypto.volume;
+      row.appendChild(volumeCell);
+      
+      document.getElementById('inr-button').addEventListener('click', async () => {
+const response = await fetch('/cryptos/inr');
+const data = await response.json();
+// do something with the data
+});
+
+document.getElementById('btc-button').addEventListener('click', async () => {
+const response = await fetch('/cryptos/btc');
+const data = await response.json();
+// do something with the data
+});
+
+
+      const baseUnitCell = document.createElement('td');
+      baseUnitCell.textContent = crypto.baseUnit;
+      row.appendChild(baseUnitCell);
+
+      cryptoTableBody.appendChild(row);
+    });
+  })
+  .catch(error => console.error(error));
+    </script>
+</body>
+</html>
